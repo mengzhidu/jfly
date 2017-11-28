@@ -1,6 +1,8 @@
 package com.mengzhidu.jfly.bean;
 
 import com.mengzhidu.jfly.helper.ClassHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,12 +15,19 @@ import java.util.Set;
  * Created by xinguimeng on 17/11/22.
  */
 public class BeanContainer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeanContainer.class);
+
+    /**
+     * 存储类的容器
+     */
     private  static  final Map<Class<?>, Object> BEAN_MAP = new HashMap<>();
 
     static {
         Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
         for (Class<?> clazz: beanClassSet) {
-            Object obj = ReflectUtil.newInstance(clazz);
+            Object obj = BeanFactory.newInstance(clazz);
+            LOGGER.info("向Bean容器中写入类 {} 的实例", clazz.getName());
             BEAN_MAP.put(clazz, obj);
         }
     }

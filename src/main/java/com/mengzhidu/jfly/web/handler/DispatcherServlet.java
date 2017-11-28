@@ -1,7 +1,7 @@
 package com.mengzhidu.jfly.web.handler;
 
 import com.mengzhidu.jfly.bean.BeanContainer;
-import com.mengzhidu.jfly.bean.ReflectUtil;
+import com.mengzhidu.jfly.bean.BeanFactory;
 import com.mengzhidu.jfly.boot.Bootstrap;
 import com.mengzhidu.jfly.helper.ConfigHelper;
 import com.mengzhidu.jfly.util.CodecUtil;
@@ -40,8 +40,6 @@ public class DispatcherServlet extends HttpServlet{
     @Override
     public void init(ServletConfig config) throws ServletException {
         LOGGER.info("dispatcher init 开始...");
-        System.out.println("init 开始...");
-        // 初始化相关的Helper类
         Bootstrap.init();
         // 获取ServletContext对象，用于注册Servlet
         ServletContext servletContext = config.getServletContext();
@@ -95,7 +93,7 @@ public class DispatcherServlet extends HttpServlet{
             Param param = new Param(paramMap);
             // 调用Action方法
             Method actionMethod = handler.getActionMethod();
-            Object result = ReflectUtil.invokeMethod(controllerBean, actionMethod, param);
+            Object result = BeanFactory.invokeMethod(controllerBean, actionMethod, param);
             // 处理Action方法返回值
             if (result instanceof View) {
                 // 返回JSP页面

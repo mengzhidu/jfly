@@ -31,7 +31,7 @@ public class BeanWired {
                             Class<?> beanFieldClass = beanField.getType();
                             Object beanFieldInstance = beanMap.get(beanFieldClass);
                             if (beanFieldInstance != null) {
-                                ReflectUtil.setField(beanInstance,beanField, beanFieldInstance);
+                                BeanFactory.setField(beanInstance,beanField, beanFieldInstance);
                             }
                         }
                     }

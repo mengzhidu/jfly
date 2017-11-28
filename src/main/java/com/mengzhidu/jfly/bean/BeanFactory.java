@@ -8,23 +8,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 反射相关的操作
- * 这里的职责相对比较多，它包含了创建实例、调用方法、设置属性等很多功能
- * Created by xinguimeng on 17/11/22.
+ * Bean工厂
+ * <p>
+ * 它负责对Bean的一些基本操作，它所实现的功能都是围绕Bean展开的
+ * 主要操作包括:
+ * 1.Bean的实例化，它负责根据一个类(不是接口)来实例化一个Bean
+ * 2.Bean属性的装配，它负责给字段设置值
+ *
+ *
  */
-public class ReflectUtil {
+public class BeanFactory {
 
-    private  static  final Logger LOGGER = LoggerFactory.getLogger(ReflectUtil.class);
+    private  static  final Logger LOGGER = LoggerFactory.getLogger(BeanFactory.class);
 
+    /**
+     * 完成Bean的实例化
+     *
+     * @param clazz 要实例化的类
+     * @return
+     */
     public static Object newInstance(Class<?> clazz) {
-        Object instance;
+        LOGGER.debug("generate instance for {}", clazz.getName());
         try {
-            instance = clazz.newInstance();
+            return clazz.newInstance();
         } catch (Exception e) {
-            LOGGER.error("new instance fail {} ", e);
+            LOGGER.error("generate instance fail {} ", e);
             throw new RuntimeException(e);
         }
-        return instance;
     }
 
     public static Object invokeMethod(Object object, Method method, Object ... args) {
@@ -38,6 +48,12 @@ public class ReflectUtil {
         return result;
     }
 
+    /**
+     * 设置属性
+     * @param object
+     * @param field
+     * @param value
+     */
     public static void setField(Object object, Field field, Object value) {
         try {
             field.setAccessible(true);
