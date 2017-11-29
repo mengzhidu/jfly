@@ -37,29 +37,39 @@ public class BeanFactory {
         }
     }
 
+    /**
+     * 调用方法
+     *
+     * @param object 对象
+     * @param method 方法
+     * @param args 参数列表
+     * @return 返回是结果对象
+     */
     public static Object invokeMethod(Object object, Method method, Object ... args) {
         Object result = null;
         try {
             method.setAccessible(true);
             result = method.invoke(object, args);
         } catch (IllegalAccessException|InvocationTargetException e) {
-            e.printStackTrace();
+            LOGGER.error("failed to invoke method:{} of object:{}, the args:{}", method, object, args);
+            throw  new RuntimeException(e);
         }
         return result;
     }
 
     /**
      * 设置属性
-     * @param object
-     * @param field
-     * @param value
+     * @param object 对象
+     * @param field 属性对象
+     * @param value 属性值
      */
     public static void setField(Object object, Field field, Object value) {
         try {
             field.setAccessible(true);
             field.set(object, value);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.error("failed to set field {} by value: {} for object {}", field, value, object);
+            throw new RuntimeException(e);
         }
     }
 }

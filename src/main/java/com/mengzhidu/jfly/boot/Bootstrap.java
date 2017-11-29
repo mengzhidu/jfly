@@ -26,5 +26,7 @@ public class Bootstrap {
         for (Class<?> clazz: classes) {
             ClassUtil.loadClass(clazz.getName(), false);
         }
+
+        BeanWired.init();
     }
 }

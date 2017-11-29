@@ -36,6 +36,13 @@ public class BeanContainer {
         return BEAN_MAP;
     }
 
+    /**
+     * 获取一个Bean的实例
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public static  <T> T getBean(Class<T> clazz) {
         if (!BEAN_MAP.containsKey(clazz)) {
             throw  new RuntimeException("can not get bean by class:" + clazz);

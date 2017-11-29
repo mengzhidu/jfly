@@ -3,6 +3,8 @@ package com.mengzhidu.jfly.helper;
 import com.mengzhidu.jfly.annotation.Controller;
 import com.mengzhidu.jfly.annotation.Service;
 import com.mengzhidu.jfly.util.ClassUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +13,13 @@ import java.util.Set;
  * Created by xinguimeng on 17/11/22.
  */
 public class ClassHelper {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassHelper.class);
+
     private static final Set<Class<?>>  CLASS_SET;
 
     static {
+
         String basePackage = ConfigHelper.getAppBasePackage();
         CLASS_SET = ClassUtil.getClassSet(basePackage);
     }
